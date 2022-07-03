@@ -10,7 +10,7 @@ const Header = (props) => {
 
 const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>
 
-const Display = ({ name, value }) => <p>{name} {value}</p>
+const Display = ({ name, value, attribute }) => <div>{name} {value} {attribute}</div>
 
 const App = () => {
   // save clicks of each button to its own state
@@ -23,6 +23,14 @@ const App = () => {
   const goodString = "good"
   const neutralString = "neutral"
   const badString = "bad"
+  const allString = "all"
+  const averageString = "average"
+  const positiveString = "positive"
+
+  let all = good+neutral+bad
+  let average = all===0 ? 0 : (good*1+neutral*0+bad*(-1))/all
+  let positive = all===0 ? 0 : good/all*100
+  let attribute = "%"
 
   const goodClick = () => {
     setGood(good + 1)
@@ -46,6 +54,9 @@ const App = () => {
       <Display name={goodString} value={good} />
       <Display name={neutralString} value={neutral} />
       <Display name={badString} value={bad} />
+      <Display name={allString} value={all} />
+      <Display name={averageString} value={average} />
+      <Display name={positiveString} value={positive} attribute={attribute} />
     </>
   )
 }
