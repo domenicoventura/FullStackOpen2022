@@ -17,16 +17,28 @@ const Statistics = ({ good, neutral, bad }) => {
   let average = all===0 ? 0 : (good*1+neutral*0+bad*(-1))/all
   let positive = all===0 ? 0 : good/all*100
   let attribute = "%"
-  return (
-    <>
-      <Display name={"good"} value={good} />
-      <Display name={"neutral"} value={neutral} />
-      <Display name={"bad"} value={bad} />
-      <Display name={"all"} value={all} />
-      <Display name={"average"} value={average} />
-      <Display name={"positive"} value={positive} attribute={attribute}/>
-    </>
-  )
+
+  if (all === 0)
+  {
+    return (
+      <>
+        <Display name={"No feedback given"} />
+      </>
+    )
+  }
+  else
+  {
+    return (
+      <>
+        <Display name={"good"} value={good} />
+        <Display name={"neutral"} value={neutral} />
+        <Display name={"bad"} value={bad} />
+        <Display name={"all"} value={all} />
+        <Display name={"average"} value={average} />
+        <Display name={"positive"} value={positive} attribute={attribute}/>
+      </>
+    )
+  }
 }
 
 const App = () => {
