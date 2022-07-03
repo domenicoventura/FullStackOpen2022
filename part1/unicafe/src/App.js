@@ -10,7 +10,7 @@ const Header = (props) => {
 
 const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>
 
-const StatisticLine = ({ text, value, attribute }) => <div>{text} {value} {attribute}</div>
+const StatisticLine = ({ text, value, attribute }) => <tr><td>{text}</td><td>{value} {attribute}</td></tr>
 
 const Statistics = ({ good, neutral, bad }) => {
   let all = good+neutral+bad
@@ -22,21 +22,23 @@ const Statistics = ({ good, neutral, bad }) => {
   {
     return (
       <>
-        <StatisticLine text={"No feedback given"} />
+        <div>{"No feedback given"}</div>
       </>
     )
   }
   else
   {
     return (
-      <>
-        <StatisticLine text={"good"} value={good} />
-        <StatisticLine text={"neutral"} value={neutral} />
-        <StatisticLine text={"bad"} value={bad} />
-        <StatisticLine text={"all"} value={all} />
-        <StatisticLine text={"average"} value={average} />
-        <StatisticLine text={"positive"} value={positive} attribute={attribute}/>
-      </>
+      <table>
+        <tbody>
+          <StatisticLine text={"good"} value={good} />
+          <StatisticLine text={"neutral"} value={neutral} />
+          <StatisticLine text={"bad"} value={bad} />
+          <StatisticLine text={"all"} value={all} />
+          <StatisticLine text={"average"} value={average} />
+          <StatisticLine text={"positive"} value={positive} attribute={attribute}/>
+        </tbody>
+      </table>
     )
   }
 }
