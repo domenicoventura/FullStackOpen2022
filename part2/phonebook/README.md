@@ -1,0 +1,1 @@
+Let's continue expanding our application by allowing users to add new notes.
