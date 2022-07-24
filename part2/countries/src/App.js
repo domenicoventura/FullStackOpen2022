@@ -26,10 +26,15 @@ const App = () => {
     setNewSearch(event.target.value)
   }
 
+  const handleShowClick = (event) => {
+    // console.log(event.target.id)
+    setNewSearch(event.target.id)
+  }
+
   return (
     <div>
       <Filter value={newSearch} onChange={handleSearchChange} />
-      <Countries countriesToShow={countriesToShow} />
+      <Countries countriesToShow={countriesToShow} handleShowClick={handleShowClick}/>
     </div>
   )
 }
