@@ -20,7 +20,7 @@ const App = (props) => {
 
   const personsToShow = newSearch === '' ?
                         persons :
-                        persons.filter(person => person.name.search(newSearch) !== -1)
+                        persons.filter(person => person.name.toLowerCase().indexOf(newSearch.toLowerCase()) !== -1)
 
   // console.log('persons is', persons)
 
