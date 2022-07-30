@@ -1,10 +1,14 @@
 import React from 'react'
 
-const Person = (props) => {
+const Person = ({ person, deletePerson }) => {
   // console.log('props is', props)
   return (
     <>
-      <li>{props.person.name} {props.person.number}</li>
+      <li>
+        {person.name} {" "}
+        {person.number} {" "}
+        <button onClick={deletePerson}>{"delete"}</button>
+      </li>
     </>
   )
 }
@@ -15,7 +19,11 @@ const Persons = (props) => {
     <ul>
         {/* {console.log('personsToShow is', props.personsToShow)} */}
         {props.personsToShow.map(person => 
-          <Person key={person.id} person={person} />
+          <Person
+            key={person.id}
+            person={person}
+            deletePerson={() => props.deletePersonOf(person.id)}
+          />
         )}
     </ul>
   )
