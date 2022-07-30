@@ -19,8 +19,6 @@ const App = () => {
                         [] :
                         countries.filter(country => country.name.common.toLowerCase().indexOf(newSearch.toLowerCase()) !== -1)
 
-  // console.log('persons is', persons)
-
   const handleSearchChange = (event) => {
     // console.log(event.target.value)
     setNewSearch(event.target.value)

@@ -1,19 +1,6 @@
 import React from 'react'
-
-const Button = ({ id, onClick, text }) => <button id={id} onClick={onClick}>{text}</button>
-
-const Country = (props) => {
-  // console.log('Country props is', props)
-  
-  return (
-    <>
-      {/* <li>{props.country.name.common} <Button onClick={() => handleShow(props.country.name.common)} text={"show"} /></li> */}
-      {/* <li>{props.country.name.common} <button onClick={() => {props.onClick(props.country.name.common)}}>Show</button></li> */}
-      <li>{props.country.name.common} <Button id={props.country.name.common} onClick={props.onClick} text={"show"} /></li>
-      {/* <div><button onClick={props.onClick}>Show</button></div> */}
-    </>
-  )
-}
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 
 const Language = (props) => {
   // console.log('Language props is', props)
@@ -26,27 +13,67 @@ const Language = (props) => {
 
 const Detail = (props) => {
   // console.log('Detail props is', props)
+  const [dataCountry, setDataCountry] = useState('')
+
+  const api_key = process.env.REACT_APP_API_KEY
   const languages = [];   
   for (const property in props.country.languages) {
     // console.log(`${property}: ${props.country.languages[property]}`);
     languages.push(`${props.country.languages[property]}`);
   }
   // console.log(languages)
+  const lat = props.country.capitalInfo.latlng[0]
+  const lng = props.country.capitalInfo.latlng[1]
+  // console.log("Lat: ", lat, " Lng: ", lng)
 
-  return (
-    <>
-      <h2>{props.country.name.common}</h2>
-      <div>capital {props.country.capital[0]}</div>
-      <div>area {props.country.area}</div>
-      <h3>languages</h3>
-      <ul>
-        {languages.map((language) => 
-          <Language key={language} language={language} />
-        )}
-      </ul>
-      <img src={props.country.flags.png} alt="Country's Flag"></img>
-    </>
-  )
+  // https://openweathermap.org/data/2.5/onecall?lat=55&lon=37&units=metric&appid=...
+  useEffect(() => {
+    axios
+      .get(`https://openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&units=metric&appid=${api_key}`)
+      .then(response => {
+        setDataCountry(response.data)
+        // console.log(response.data)
+      })
+  }, [api_key, lat, lng])
+
+  if (dataCountry === '')
+  {
+    return (
+      <>
+        <h1>{props.country.name.common}</h1>
+        <div>capital {props.country.capital[0]}</div>
+        <div>area {props.country.area}</div>
+        <h3>languages</h3>
+        <ul>
+          {languages.map((language) => 
+            <Language key={language} language={language} />
+          )}
+        </ul>
+        <img src={props.country.flags.png} alt="Country's Flag"></img>
+      </>
+    )
+  }
+  else
+  {
+    return (
+      <>
+        <h1>{props.country.name.common}</h1>
+        <div>capital {props.country.capital[0]}</div>
+        <div>area {props.country.area}</div>
+        <h3>languages</h3>
+        <ul>
+          {languages.map((language) => 
+            <Language key={language} language={language} />
+          )}
+        </ul>
+        <img src={props.country.flags.png} alt="Country's Flag"></img>
+        <h2>Weather in {props.country.capital[0]}</h2>
+        <div>temperature {dataCountry.current.temp} Celsius</div>
+        <img src={`http://openweathermap.org/img/wn/${dataCountry.current.weather[0].icon}@2x.png`} alt="Country's Temperature Icon"></img>
+        <div>wind {dataCountry.current.wind_speed} m/s</div>
+      </>
+    )
+  }
 }
 
 const Countries = (props) => {
@@ -69,7 +96,6 @@ const Countries = (props) => {
         return (
           <ul>
               {props.countriesToShow.map(country => 
-                // <Country key={country.cca2} country={country} onclick={props.handleShowClick}/>
                 <li key={country.cca2}>{country.name.common} <button id={country.name.common} onClick={props.handleShowClick}>{"show"}</button> </li>
               )}
           </ul>
