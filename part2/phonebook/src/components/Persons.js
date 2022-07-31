@@ -4,7 +4,7 @@ const Person = ({ person, deletePerson }) => {
   // console.log('props is', props)
   return (
     <>
-      <li>
+      <li className='person'>
         {person.name} {" "}
         {person.number} {" "}
         <button onClick={deletePerson}>{"delete"}</button>
