@@ -67,8 +67,29 @@ app.post('/api/persons', (request, response) => {
   const person = request.body
   person.id = randomId
   // console.log(person)
-  persons = persons.concat(person)
-  response.json(person)
+  let addPerson = true
+  for (const p of persons) {
+    // console.log(p);
+    if (p.name === person.name)
+    {
+      const message = `${p.name} is already added to phonebook`
+      addPerson = false
+      break
+    }
+  }
+  if ((person.name === "") || (person.number === ""))
+  {
+    response.status(406).json({ error: 'name and/or number must not be null' })
+  }
+  else if (!addPerson)
+  {
+    response.status(400).json({ error: 'name must be unique' })
+  }
+  else
+  {
+    persons = persons.concat(person)
+    response.json(person)
+  }
 })
 
 const PORT = 3001
