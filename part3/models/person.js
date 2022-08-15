@@ -19,7 +19,9 @@ const personSchema = new mongoose.Schema({
   },
   number: {
     type: String,
-    required: true
+    minLength: 8,
+    required: true,
+    match: [/^\d{2,3}-\d{4,}/, 'Please fill a valid telephone number']
   },
 })
 
