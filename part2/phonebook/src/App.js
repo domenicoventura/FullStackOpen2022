@@ -124,6 +124,14 @@ const App = (props) => {
             setNotificationMessage(null)
           }, 5000)
         })
+        .catch(error => {
+          // this is the way to access the error message
+          // console.log(error.response.data.error)
+          setErrorMessage(error.response.data.error)
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000)
+        })
     }
   }
 
